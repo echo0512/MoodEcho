@@ -1,0 +1,20 @@
+# Build outputs and local dependencies
+/target/
+/backend/target/
+/frontend/dist/
+/frontend/node_modules/
+
+# Local data and secrets
+/backend/uploads/
+.env
+.env.*
+*.env
+*.log
+
+# OS and editor files
+.DS_Store
+.idea/
+
+# Local assistant skills
+.github/skills/
+.agents/skills/

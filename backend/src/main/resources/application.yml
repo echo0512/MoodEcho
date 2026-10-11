@@ -1,0 +1,61 @@
+server:
+  port: 8080
+
+spring:
+  task:
+    scheduling:
+      pool:
+        size: 2
+  application:
+    name: backend
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+  datasource:
+    url: "jdbc:mysql://localhost:3306/moodecho_app?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai"
+    username: root
+    password: ${DB_PASSWORD} # 数据库密码,解决硬编码
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.example.moodecho.entity
+
+jwt:
+  secret: ${JWT_SECRET} # JWT签名密钥，用于生成和验证Token，确保数据防篡改伪造
+  expiration: 86400000 # 1 day
+
+moodecho:
+  upload:
+    diary-image-dir: uploads/diary-images
+  embedding:
+    min-similarity: ${SEMANTIC_MIN_SIMILARITY:0.45}
+    short-text-min-similarity: ${SEMANTIC_SHORT_TEXT_MIN_SIMILARITY:0.65}
+    lexical-boost: ${SEMANTIC_LEXICAL_BOOST:0.12}
+    min-semantic-text-length: ${SEMANTIC_MIN_TEXT_LENGTH:6}
+    enabled: true
+    base-url: ${DASHSCOPE_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+    api-key: ${DASHSCOPE_API_KEY:}
+    model: ${DASHSCOPE_EMBEDDING_MODEL:text-embedding-v4}
